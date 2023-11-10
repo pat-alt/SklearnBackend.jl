@@ -33,7 +33,8 @@ import CounterfactualExplanations.Models: logits
 import CounterfactualExplanations.Models: probs 
 
 function probs(model::SklearnModel, input::AbstractArray)
-    [t for t in transpose(model.model.predict_proba(to_python_df(input', model)))]
+    X = permutedims(input)
+    [t for t in transpose(model.model.predict_proba(to_python_df(X, model)))]
 end
 # Some scikit-learn classifiers do not rely on logits, therefore we cannot
 # assume that they are generally available. We use probabilities.

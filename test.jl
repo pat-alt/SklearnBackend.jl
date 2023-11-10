@@ -1,3 +1,4 @@
+using Pkg; Pkg.activate("SklearnBackend/")
 using OhMyREPL
 using Revise
 
@@ -16,10 +17,8 @@ test = SklearnModel(data, [n for n in model.X.columns], "RandomForestClassifier"
 target = 2
 factual = 1
 x = select_first_factual(data, factual)
-generator = GenericGenerator()
+generator = GrowingSpheresGenerator()
 
 ce = generate_counterfactual(
   x, target, data, model, generator; 
-  num_counterfactuals=3, converge_when=:generator_conditions,
-  gradient_tol=1e-3
 )
